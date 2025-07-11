@@ -26,7 +26,7 @@
       enable = true;
       previews = {
         web = {
-          command = ["npm", "run", "start:dev"];
+          command = [ "npm" "run" "start:dev" ];
           manager = "web";
           env = {
             PORT = "$PORT";
