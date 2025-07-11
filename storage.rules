@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // HIPAA-compliant rules - only authenticated users can access their own files
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null 
+        && request.auth.uid == userId;
+    }
+    
+    // Medical documents - extra security
+    match /medical/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null 
+        && request.auth.uid == userId
+        && request.auth.token.email_verified == true;
+    }
+    
+    // Public uploads (avatars, etc) - still requires auth
+    match /public/{allPaths=**} {
+      // Allow read only if the file has been validated
+      allow read: if request.auth != null && resource.metadata.validated == 'true';
+      allow write: if request.auth != null 
+        && resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+  }
+}

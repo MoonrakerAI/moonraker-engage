@@ -1,0 +1,18 @@
+mutation CreateConversation($userId: String!, $sessionId: String!, $message: String!, $response: String!) {
+  conversation_insert(data: {
+    userId: $userId,
+    sessionId: $sessionId,
+    message: $message,
+    response: $response,
+    isBot: false
+  })
+}
+
+mutation CreateAuditLog($action: String!, $severity: String!, $userId: String, $details: String) {
+  auditLog_insert(data: {
+    action: $action,
+    severity: $severity,
+    userId: $userId,
+    details: $details
+  })
+}

@@ -1,0 +1,20 @@
+type Conversation @table {
+  id: String! @default(expr: "uuidV4()")
+  userId: String!
+  sessionId: String!
+  message: String!
+  response: String!
+  isBot: Boolean! @default(value: false)
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type AuditLog @table {
+  id: String! @default(expr: "uuidV4()")
+  action: String!
+  userId: String
+  ipAddress: String
+  userAgent: String
+  details: String
+  timestamp: Timestamp! @default(expr: "request.time")
+  severity: String!
+}

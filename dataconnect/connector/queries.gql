@@ -1,0 +1,30 @@
+query GetConversations($userId: String!) {
+  conversations(where: {userId: {eq: $userId}}) {
+    id
+    message
+    response
+    createdAt
+  }
+}
+
+query GetAllConversations {
+  conversations {
+    id
+    userId
+    sessionId 
+    message
+    response
+    isBot
+    createdAt
+  }
+}
+
+query GetAuditLogs($limit: Int = 50) {
+  auditLogs(orderBy: {timestamp: DESC}, limit: $limit) {
+    id
+    action
+    userId
+    timestamp
+    severity
+  }
+}

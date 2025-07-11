@@ -1,0 +1,13 @@
+{
+  "name": "hipaa-chatbot-functions",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "firebase-functions": "^4.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.0"
+  }
+}

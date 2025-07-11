@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication and identification
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  passwordHash   String
+  firstName      String?
+  lastName       String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  chatSessions   ChatSession[]
+  auditLogs      AuditLog[]
+}
+
+// Groups a conversation between a user and the AI
+model ChatSession {
+  id        String     @id @default(cuid())
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  messages  Message[]
+  auditLogs AuditLog[]
+}
+
+// Represents a single message in a chat session
+model Message {
+  id            String      @id @default(cuid())
+  chatSessionId String
+  chatSession   ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+  content       String      // Content will be encrypted before saving
+  sender        Sender
+  createdAt     DateTime    @default(now())
+}
+
+enum Sender {
+  USER
+  AI
+}
+
+// HIPAA-required audit log for tracking access to PHI
+model AuditLog {
+  id            String       @id @default(cuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: NoAction)
+  action        String       // e.g., 'VIEW_CHAT_HISTORY', 'SEND_MESSAGE'
+  timestamp     DateTime     @default(now())
+  details       Json?        // Additional details about the action
+  chatSessionId String?      // Optional: link to a specific chat session
+  chatSession   ChatSession? @relation(fields: [chatSessionId], references: [id], onDelete: SetNull)
+}

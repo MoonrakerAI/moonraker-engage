@@ -1,0 +1,246 @@
+extend type Mutation {
+  """
+  ✨ Insert a single `AuditLog` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  auditLog_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: AuditLog_Data!
+  ): AuditLog_KeyOutput! @fdc_generated(from: "AuditLog", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert a single `Conversation` into the table and return its key. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  conversation_insert(
+    """
+    Data object to insert into the table.
+    """
+    data: Conversation_Data!
+  ): Conversation_KeyOutput! @fdc_generated(from: "Conversation", purpose: INSERT_SINGLE)
+  """
+  ✨ Insert `AuditLog` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  auditLog_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [AuditLog_Data!]!
+  ): [AuditLog_KeyOutput!]! @fdc_generated(from: "AuditLog", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert `Conversation` objects into the table and return their keys. Columns not specified in `data` will receive defaults (e.g. `null`).
+  """
+  conversation_insertMany(
+    """
+    List of data objects to insert into the table.
+    """
+    data: [Conversation_Data!]!
+  ): [Conversation_KeyOutput!]! @fdc_generated(from: "Conversation", purpose: INSERT_MULTIPLE)
+  """
+  ✨ Insert or update a single `AuditLog` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `AuditLog`.
+  """
+  auditLog_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: AuditLog_Data!
+  ): AuditLog_KeyOutput! @fdc_generated(from: "AuditLog", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update a single `Conversation` into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Conversation`.
+  """
+  conversation_upsert(
+    """
+    Data object to insert or update if it already exists.
+    """
+    data: Conversation_Data!
+  ): Conversation_KeyOutput! @fdc_generated(from: "Conversation", purpose: UPSERT_SINGLE)
+  """
+  ✨ Insert or update `AuditLog` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `AuditLog`.
+  """
+  auditLog_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [AuditLog_Data!]!
+  ): [AuditLog_KeyOutput!]! @fdc_generated(from: "AuditLog", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Insert or update `Conversation` objects into the table, based on the primary key. Returns the key of the newly inserted or existing updated `Conversation`.
+  """
+  conversation_upsertMany(
+    """
+    List of data objects to insert or update if it already exists.
+    """
+    data: [Conversation_Data!]!
+  ): [Conversation_KeyOutput!]! @fdc_generated(from: "Conversation", purpose: UPSERT_MULTIPLE)
+  """
+  ✨ Update a single `AuditLog` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `AuditLog` or `null` if not found.
+  """
+  auditLog_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: AuditLog_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: AuditLog_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: AuditLog_Data!
+  ): AuditLog_KeyOutput @fdc_generated(from: "AuditLog", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update a single `Conversation` based on `id`, `key` or `first`, setting columns specified in `data`. Returns the key of the updated `Conversation` or `null` if not found.
+  """
+  conversation_update(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: Conversation_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Conversation_FirstRow
+
+    """
+    Data object containing fields to be updated.
+    """
+    data: Conversation_Data!
+  ): Conversation_KeyOutput @fdc_generated(from: "Conversation", purpose: UPDATE_SINGLE)
+  """
+  ✨ Update `AuditLog` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  auditLog_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: AuditLog_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: AuditLog_Data!
+  ): Int! @fdc_generated(from: "AuditLog", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Update `Conversation` objects matching `where` conditions (or `all`, if true) according to `data`. Returns the number of rows updated.
+  """
+  conversation_updateMany(
+    """
+    Filter condition to specify which rows to update.
+    """
+    where: Conversation_Filter
+
+    """
+    Set to true to update all rows.
+    """
+    all: Boolean = false
+
+    """
+    Data object containing fields to update.
+    """
+    data: Conversation_Data!
+  ): Int! @fdc_generated(from: "Conversation", purpose: UPDATE_MULTIPLE)
+  """
+  ✨ Delete a single `AuditLog` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  auditLog_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: AuditLog_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: AuditLog_FirstRow
+  ): AuditLog_KeyOutput @fdc_generated(from: "AuditLog", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete a single `Conversation` based on `id`, `key` or `first` and return its key (or `null` if not found).
+  """
+  conversation_delete(
+    """
+    The unique ID of the object.
+    """
+    id: String
+
+    """
+    ✨ `_expr` server value variant of `id` (The unique ID of the object.)
+    """
+    id_expr: String_Expr
+
+    """
+    The key used to identify the object.
+    """
+    key: Conversation_Key
+
+    """
+    Fetch the first row based on the filters and ordering.
+    """
+    first: Conversation_FirstRow
+  ): Conversation_KeyOutput @fdc_generated(from: "Conversation", purpose: DELETE_SINGLE)
+  """
+  ✨ Delete `AuditLog` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  auditLog_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: AuditLog_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "AuditLog", purpose: DELETE_MULTIPLE)
+  """
+  ✨ Delete `Conversation` objects matching `where` conditions (or `all`, if true). Returns the number of rows deleted.
+  """
+  conversation_deleteMany(
+    """
+    Filter condition to specify which rows to delete.
+    """
+    where: Conversation_Filter
+
+    """
+    Set to true to delete all rows.
+    """
+    all: Boolean = false
+  ): Int! @fdc_generated(from: "Conversation", purpose: DELETE_MULTIPLE)
+}
