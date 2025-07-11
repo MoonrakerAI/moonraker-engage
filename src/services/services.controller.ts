@@ -5,4 +5,5 @@ import { logAuditAction } from '../audit/audit.service'; // Import the audit log
 
 @Controller('services')
 @UseGuards(JwtAuthGuard)
-export class ServicesController
+export class ServicesController {
+}

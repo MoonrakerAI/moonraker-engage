@@ -1,36 +1,37 @@
-/* ... existing code ... */
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from './prisma/prisma.service';
+import { Patient } from '@prisma/client';
 import * as redis from 'redis';
 
-// ... other imports ...
+@Injectable()
+export class AppService {
+  private readonly redisClient: redis.RedisClientType;
 
-const redisClient = redis.createClient();
+  constructor(private readonly prisma: PrismaService) {
+    this.redisClient = redis.createClient();
+    this.redisClient.connect();
+  }
 
-async function getCachedData(key: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    redisClient.get(key, (err, data) => {
-      if (err) reject(err);
-      else resolve(JSON.parse(data || 'null'));
-    });
-  });
+  getHello(): string {
+    return 'Hello World!';
+  }
+
+  async getCachedData(key: string): Promise<any> {
+      const data = await this.redisClient.get(key);
+      return JSON.parse(data || 'null');
+  }
+
+  async setCachedData(key: string, data: any): Promise<void> {
+    await this.redisClient.set(key, JSON.stringify(data));
+  }
+
+  async findPatient(id: number): Promise<Patient | null> {
+    const cacheKey = `patient:${id}`;
+    const cachedData = await this.getCachedData(cacheKey);
+    if (cachedData) return cachedData;
+
+    const patient = await this.prisma.patient.findUnique({ where: { id } });
+    await this.setCachedData(cacheKey, patient);
+    return patient;
+  }
 }
-
-async function setCachedData(key: string, data: any): Promise<void> {
-  return new Promise((resolve, reject) => {
-    redisClient.set(key, JSON.stringify(data), (err) => {
-      if (err) reject(err);
-      else resolve();
-    });
-  });
-}
-
-// Example usage within a service method:
-async findPatient(id: number): Promise<Patient | null> {
-  const cacheKey = `patient:${id}`;
-  const cachedData = await getCachedData(cacheKey);
-  if (cachedData) return cachedData;
-
-  const patient = await this.prisma.patient.findUnique({ where: { id } });
-  await setCachedData(cacheKey, patient);
-  return patient;
-}
-/* ... rest of the code ... */
